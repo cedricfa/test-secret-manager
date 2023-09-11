@@ -1,0 +1,18 @@
+org: cedricfa
+app: test-secret-manager
+service: test-secret-manager
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource: arn:aws:secretsmanager:us-east-1:154736700959:secret:INTERNAL_INFRA_DEV_APP-pNXJwD-*
+functions:
+  getSecret:
+    handler: handler.getSecret
